@@ -1,13 +1,12 @@
 export const typeDefs = `
-    type Query {
-        getCourse: String
-    }
+    
     type Client {
-        id: ID
+        _id: ID
         firstname: String
         lastname: String
         email: String
         createAt: String
+        updatedAt: String
     }
     type Token {
         token: String
@@ -23,9 +22,31 @@ export const typeDefs = `
         email: String!
         password: String!
     }
+    type Product {
+        _id: ID
+        name: String
+        price: Int
+        stock: Int
+        createdAt: String
+        updatedAt: String
+    }
+    input ProductInput {
+        name: String!
+        price: Float!
+        stock: Int!
+    }
 
+    type Query {
+        getClient(token: String!): Client
+        getProducts: [Product]
+    }
     type Mutation {
+        # Client
         createClient(input: ClientInput!) : Client
         authenticateClient(input: AuthenticateClientInput!): Token
+        # Product
+        createProduct(input: ProductInput): Product
     }
+
+
 `

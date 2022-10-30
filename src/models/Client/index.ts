@@ -1,20 +1,30 @@
-import { prop, getModelForClass } from '@typegoose/typegoose'
+import { Schema, model } from 'mongoose'
+import type { Client as ClientType } from './@types'
 
-class Client {
-  @prop({ required: true, trim: true })
-  public firstname: string
-
-  @prop({ required: true, trim: true })
-  public lastname: string
-
-  @prop({ required: true, trim: true, unique: true })
-  public email: string
-
-  @prop({ required: true, trim: true })
-  public password: string
-
-  @prop({ default: Date.now() })
-  public createAt: Date
-}
-
-export default getModelForClass(Client)
+const Client = new Schema<ClientType>({
+  firstname: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  lastname: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
+    lowercase: true
+  },
+  password: {
+    type: String,
+    required: true,
+    trim: true
+  }
+}, {
+  timestamps: true
+})
+export default model<ClientType>('Client', Client)
